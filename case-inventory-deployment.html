@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inventory Deployment Planning | Chiamaka Ikpo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="index.html">Chiamaka Ikpo</a>
+  <ul><li><a href="index.html#work">Case studies</a></li><li><a href="index.html#contact">Contact</a></li></ul>
+</div></nav>
+
+<header class="case-head"><div class="wrap">
+  <p class="eyebrow">Case study 2 · Process improvement</p>
+  <h1>Improving inventory deployment in a national brewing supply chain</h1>
+  <p class="lead">How finished goods were allocated from breweries to distribution points, where the process broke down, and what a better process looks like.</p>
+  <div class="facts">
+    <div><b>Context</b><span>Global FMCG brewer, country operation</span></div>
+    <div><b>My role</b><span>Country Inventory Deployment Planner, previously Material Requirement Planner</span></div>
+    <div><b>Artefacts</b><span>As-is / to-be process map, pain-point analysis, business rules, KPIs</span></div>
+    <div><b>Tools</b><span>SAP S/4HANA, Excel, Power BI</span></div>
+  </div>
+</div></header>
+
+<article><div class="wrap">
+  <p class="note">This case study is anonymised. Figures are left out and the process is simplified to protect confidential information.</p>
+
+  <h2>The business problem</h2>
+  <p>Finished goods came out of several breweries and had to be deployed to depots and distributors across the country. When deployment went wrong, one location ran short while another held too much of the same product. That meant lost sales in one place and ageing stock, extra handling and transfer costs in another.</p>
+
+  <h2>Current state (as-is)</h2>
+  <div class="panel">
+    <h4>As-is deployment cycle</h4>
+    <div class="flow">
+      <div class="step"><b>Extract</b>Stock and sales data pulled from SAP</div><span class="arrow">→</span>
+      <div class="step pain"><b>Consolidate ⚠</b>Manual merging in spreadsheets</div><span class="arrow">→</span>
+      <div class="step pain"><b>Allocate ⚠</b>Allocation based on judgement, no shared rules</div><span class="arrow">→</span>
+      <div class="step"><b>Approve</b>Review with sales and logistics</div><span class="arrow">→</span>
+      <div class="step pain"><b>React ⚠</b>Firefighting shortages after the fact</div>
+    </div>
+  </div>
+
+  <h3>Root causes</h3>
+  <ul>
+    <li><strong>Data latency:</strong> decisions were based on a snapshot that was already out of date by the time allocation happened.</li>
+    <li><strong>No shared allocation rules:</strong> priorities varied by planner and by week, so outcomes were hard to repeat or explain.</li>
+    <li><strong>Everything reviewed at once:</strong> planners spent time checking every SKU and location instead of focusing on the exceptions.</li>
+    <li><strong>Siloed forecasts:</strong> sales forecasts and production plans weren't reconciled before deployment.</li>
+  </ul>
+
+  <h2>Future state (to-be)</h2>
+  <div class="panel">
+    <h4>To-be deployment cycle</h4>
+    <div class="flow">
+      <div class="step"><b>1 · Sync</b>Agreed data cut-off with a single SAP-sourced view</div><span class="arrow">→</span>
+      <div class="step"><b>2 · Rule-based draft</b>Allocation by days-of-cover targets per location</div><span class="arrow">→</span>
+      <div class="step"><b>3 · Exceptions</b>Planner reviews only SKUs/locations outside tolerance</div><span class="arrow">→</span>
+      <div class="step"><b>4 · Align</b>Short S&amp;OP-style check with sales and logistics</div><span class="arrow">→</span>
+      <div class="step"><b>5 · Monitor</b>Dashboard tracks cover, imbalance and service level</div>
+    </div>
+  </div>
+
+  <h3>Business rules (sample)</h3>
+  <table>
+    <tr><th>ID</th><th>Rule</th></tr>
+    <tr><td>BR-01</td><td>Each location has a target days-of-cover band per SKU class (fast / medium / slow movers).</td></tr>
+    <tr><td>BR-02</td><td>When supply is short, allocate in proportion to forecast demand, with a minimum floor for priority customers.</td></tr>
+    <tr><td>BR-03</td><td>Suggest an inter-depot transfer only when projected excess at one site covers a projected shortfall at another within the transfer lead time.</td></tr>
+    <tr><td>BR-04</td><td>A location/SKU is flagged as an exception when projected cover falls outside its band.</td></tr>
+  </table>
+
+  <h3>KPIs to measure success</h3>
+  <ul>
+    <li>Service level / fill rate by location</li>
+    <li>Stock imbalance index (the spread of days-of-cover across locations)</li>
+    <li>Number and cost of reactive inter-depot transfers</li>
+    <li>Share of planner time spent on exceptions rather than routine checks</li>
+  </ul>
+
+  <h2>What this shows as a BA</h2>
+  <ul>
+    <li>Mapping a real end-to-end process and pinpointing where value leaks</li>
+    <li>Separating symptoms (shortages) from root causes (data, rules, focus)</li>
+    <li>Writing clear business rules that a system or a new team member could follow</li>
+    <li>Defining KPIs so improvement can be measured, not just claimed</li>
+  </ul>
+
+  <h2>Reflection</h2>
+  <p>The biggest lesson was that the tooling problem was really an alignment problem. Rules only work if sales, logistics and planning agree on them. Next time I'd run a short workshop to agree the rules before building anything.</p>
+
+  <div class="pager">
+    <a href="case-replenishment-ml.html">← ML replenishment</a>
+    <a href="case-procurement.html">Next: Procure-to-pay →</a>
+  </div>
+</div></article>
+
+<footer><div class="wrap"><span>© 2026 Chiamaka Ikpo</span></div></footer>
+</body>
+</html>

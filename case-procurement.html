@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procure-to-Pay Requirements | Chiamaka Ikpo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="index.html">Chiamaka Ikpo</a>
+  <ul><li><a href="index.html#work">Case studies</a></li><li><a href="index.html#contact">Contact</a></li></ul>
+</div></nav>
+
+<header class="case-head"><div class="wrap">
+  <p class="eyebrow">Case study 3 · Requirements</p>
+  <h1>Requirements for a controlled procure-to-pay and supplier onboarding process</h1>
+  <p class="lead">Turning procurement pain points in a regulated bank into user stories, acceptance criteria and clear ownership.</p>
+  <div class="facts">
+    <div><b>Context</b><span>Commercial bank, procurement function</span></div>
+    <div><b>My role</b><span>Procurement Officer, day-to-day P2P and supplier administration</span></div>
+    <div><b>Artefacts</b><span>Stakeholder map, pain points, user stories, RACI</span></div>
+    <div><b>Focus</b><span>Compliance, auditability, turnaround time</span></div>
+  </div>
+</div></header>
+
+<article><div class="wrap">
+  <p class="note">This case study is anonymised and generalised. It shows how I would document requirements for this process, based on my hands-on experience in it.</p>
+
+  <h2>The business problem</h2>
+  <p>Banks are closely regulated, so every purchase needs to be traceable: who requested it, who approved it, which supplier was chosen and why. When those steps rely on email chains and manual checks, purchases slow down, suppliers get onboarded without complete due diligence, and audits take a long time.</p>
+
+  <h2>Stakeholders</h2>
+  <table>
+    <tr><th>Stakeholder</th><th>Interest</th><th>Influence</th></tr>
+    <tr><td>Requesting departments</td><td>Fast, simple way to buy what they need</td><td>Medium</td></tr>
+    <tr><td>Procurement team</td><td>Fair sourcing, controlled spend, less rework</td><td>High</td></tr>
+    <tr><td>Finance / Accounts payable</td><td>Invoices match POs and receipts; budget control</td><td>High</td></tr>
+    <tr><td>Compliance &amp; internal audit</td><td>Full audit trail, supplier due diligence (KYC)</td><td>High</td></tr>
+    <tr><td>Suppliers</td><td>Clear onboarding, on-time payment</td><td>Low</td></tr>
+  </table>
+
+  <h2>Key pain points</h2>
+  <ul>
+    <li>Requisitions arrived incomplete, which caused back-and-forth before a PO could be raised</li>
+    <li>Approval routing depended on people knowing who to email</li>
+    <li>Supplier onboarding documents were collected inconsistently</li>
+    <li>Three-way match (PO, goods receipt, invoice) was checked by hand, which delayed payment</li>
+  </ul>
+
+  <h2>Sample user stories</h2>
+  <div class="story">
+    <p><strong>US-01:</strong> As a <em>requester</em>, I want a guided requisition form with required fields and budget codes so that my request isn't sent back for missing information.</p>
+    <ul><li>Given a required field is empty, when I submit, then the form blocks submission and highlights the field.</li><li>Given I select a cost centre, then only valid budget codes for that cost centre are shown.</li></ul>
+  </div>
+  <div class="story">
+    <p><strong>US-02:</strong> As a <em>procurement officer</em>, I want approvals routed automatically by value threshold and category so that no purchase skips the right approver.</p>
+    <ul><li>Given a requisition above the threshold, then it routes to the next approval level automatically.</li><li>Every approval is logged with approver, timestamp and decision.</li></ul>
+  </div>
+  <div class="story">
+    <p><strong>US-03:</strong> As a <em>compliance officer</em>, I want the system to block POs to any supplier whose due diligence documents aren't verified so that we never buy from an unvetted supplier.</p>
+    <ul><li>Given a supplier's status is "pending", when a PO is raised, then the system blocks it and shows the missing documents.</li></ul>
+  </div>
+  <div class="story">
+    <p><strong>US-04:</strong> As an <em>accounts payable officer</em>, I want invoices automatically matched to POs and goods receipts so that I only handle mismatches.</p>
+    <ul><li>Given invoice, PO and receipt match within tolerance, then the invoice is marked ready for payment.</li><li>Given they don't match, then it's routed to an exception queue with the reason.</li></ul>
+  </div>
+
+  <h2>RACI (to-be process)</h2>
+  <div class="panel">
+  <table>
+    <tr><th>Activity</th><th>Requester</th><th>Procurement</th><th>Finance</th><th>Compliance</th></tr>
+    <tr><td>Raise requisition</td><td>R/A</td><td>I</td><td>I</td><td>–</td></tr>
+    <tr><td>Source &amp; select supplier</td><td>C</td><td>R/A</td><td>I</td><td>C</td></tr>
+    <tr><td>Supplier due diligence</td><td>–</td><td>R</td><td>–</td><td>A</td></tr>
+    <tr><td>Approve PO</td><td>I</td><td>R</td><td>A</td><td>–</td></tr>
+    <tr><td>Confirm goods receipt</td><td>R/A</td><td>I</td><td>I</td><td>–</td></tr>
+    <tr><td>Match &amp; pay invoice</td><td>–</td><td>C</td><td>R/A</td><td>–</td></tr>
+  </table>
+  <p class="muted" style="font-size:14px;margin:10px 0 0">R = Responsible · A = Accountable · C = Consulted · I = Informed</p>
+  </div>
+
+  <h2>What this shows as a BA</h2>
+  <ul>
+    <li>Identifying stakeholders and balancing competing needs (speed vs. control)</li>
+    <li>Writing testable user stories in Given/When/Then form</li>
+    <li>Making ownership explicit so the process holds up in an audit</li>
+  </ul>
+
+  <h2>Reflection</h2>
+  <p>Requesters and compliance want opposite things: less friction and more control. The best requirements serve both, for example with guided forms that make the compliant path the easiest one.</p>
+
+  <div class="pager">
+    <a href="case-inventory-deployment.html">← Inventory deployment</a>
+    <a href="case-dashboard.html">Next: Dashboard design →</a>
+  </div>
+</div></article>
+
+<footer><div class="wrap"><span>© 2026 Chiamaka Ikpo</span></div></footer>
+</body>
+</html>

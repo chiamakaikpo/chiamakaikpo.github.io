@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ML-Based Adaptive Replenishment | Chiamaka Ikpo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="index.html">Chiamaka Ikpo</a>
+  <ul><li><a href="index.html#work">Case studies</a></li><li><a href="index.html#contact">Contact</a></li></ul>
+</div></nav>
+
+<header class="case-head"><div class="wrap">
+  <p class="eyebrow">Case study 1 · Research &amp; decision support</p>
+  <h1>A decision support framework for adaptive inventory replenishment</h1>
+  <p class="lead">For my MRes dissertation, I built a framework that predicts how severe a demand shock will be and then changes replenishment decisions to match.</p>
+  <div class="facts">
+    <div><b>Context</b><span>MRes Computing dissertation, University of Bolton</span></div>
+    <div><b>My role</b><span>Sole researcher: problem framing, data, modelling, evaluation</span></div>
+    <div><b>Data</b><span>UCI Online Retail II, 1,636 SKUs, weekly</span></div>
+    <div><b>Tools</b><span>Python, pandas, scikit-learn, XGBoost, LightGBM, Jupyter</span></div>
+  </div>
+</div></header>
+
+<article><div class="wrap">
+  <h2>The business problem</h2>
+  <p>Most replenishment policies are static. A classic (s,S) policy reorders to level <em>S</em> when stock falls below <em>s</em>, and those parameters are set from average demand. When demand spikes suddenly because of a promotion, a seasonal peak or an outside event, a static policy reacts too late. The result is stockouts and lost sales, or expensive emergency orders.</p>
+  <p>Planners usually spot these shocks by gut feel. I wanted to know: <strong>can we warn planners early about how severe a shock will be, and turn that warning into a better reorder decision?</strong></p>
+
+  <h2>Stakeholders &amp; requirements</h2>
+  <p>I framed the solution around the people who would use it, drawing on my own years as a planner:</p>
+  <table>
+    <tr><th>Stakeholder</th><th>Need</th><th>Requirement</th></tr>
+    <tr><td>Replenishment planner</td><td>Know which SKUs are at risk before the shock hits</td><td>Shock severity forecast per SKU per week, in plain categories</td></tr>
+    <tr><td>Inventory manager</td><td>Protect service level without inflating stock</td><td>Policy parameters that adjust to the predicted severity</td></tr>
+    <tr><td>Finance</td><td>Evidence before changing policy</td><td>Head-to-head comparison against the current static policy, with significance testing</td></tr>
+  </table>
+
+  <h2>Approach</h2>
+  <div class="panel">
+    <h4>Solution flow</h4>
+    <div class="flow">
+      <div class="step"><b>1 · Prepare</b>Clean transactions and aggregate to weekly demand per SKU</div><span class="arrow">→</span>
+      <div class="step"><b>2 · Label</b>Rolling z-score to label each week Normal, Moderate, High or Severe</div><span class="arrow">→</span>
+      <div class="step"><b>3 · Predict</b>Compare Random Forest, XGBoost and LightGBM classifiers</div><span class="arrow">→</span>
+      <div class="step"><b>4 · Decide</b>Map predicted severity to adaptive reorder parameters</div><span class="arrow">→</span>
+      <div class="step"><b>5 · Evaluate</b>Simulate against static (s,S) and run Wilcoxon tests</div>
+    </div>
+  </div>
+  <ul>
+    <li><strong>Shock definition:</strong> I used four ordinal severity classes instead of a yes/no flag, because "how bad" matters more to a planner than "whether".</li>
+    <li><strong>Features:</strong> lagged and rolling demand statistics, plus cyclical week encoding (sine/cosine) to capture seasonality without a hard-coded peak-season flag.</li>
+    <li><strong>Model selection:</strong> nested cross-validation with hyperparameter tuning. I chose Random Forest as the final model.</li>
+    <li><strong>Evaluation:</strong> an inventory simulation comparing adaptive and static policies SKU by SKU, with Wilcoxon signed-rank tests for significance.</li>
+  </ul>
+
+  <h2>Results</h2>
+  <div class="stats">
+    <div class="stat"><div class="n">1,636</div><div class="l">SKUs simulated head-to-head</div></div>
+    <div class="stat"><div class="n">p &lt; 0.0001</div><div class="l">Improvement in service level (significant)</div></div>
+    <div class="stat"><div class="n">p &lt; 0.0001</div><div class="l">Reduction in stockout rate (significant)</div></div>
+    <div class="stat"><div class="n">33.7%</div><div class="l">of SKUs (551) had lower total cost; not significant overall (p = 0.124)</div></div>
+  </div>
+  <p>The adaptive policy clearly improved <strong>service level and stockout rate</strong>. The total-cost saving was real for about a third of SKUs but not statistically significant across the whole range. That finding matters: the case for adoption is about <em>availability</em>, not guaranteed cost cuts. I reported it that way rather than overstating the result.</p>
+
+  <h2>What this shows as a BA</h2>
+  <ul>
+    <li>Turning a vague operational pain ("we keep getting caught out") into a precise, measurable question</li>
+    <li>Designing outputs around what the decision-maker actually needs</li>
+    <li>Building an evidence base with a fair baseline and reporting results honestly, including the parts that didn't work out</li>
+  </ul>
+
+  <h2>Reflection</h2>
+  <p>Next, I'd run a pilot with a planning team on a small SKU range and measure how often planners accept or override the recommendation. Adoption is where decision support tools succeed or fail. I'd also test cost-weighted policy rules to target the SKUs where savings are most likely.</p>
+
+  <div class="pager">
+    <a href="index.html#work">← All case studies</a>
+    <a href="case-inventory-deployment.html">Next: Inventory deployment →</a>
+  </div>
+</div></article>
+
+<footer><div class="wrap"><span>© 2026 Chiamaka Ikpo</span></div></footer>
+</body>
+</html>
