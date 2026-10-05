@@ -16,6 +16,107 @@
   <p class="eyebrow">Case study 4 · BI &amp; dashboard design</p>
   <h1>Designing a supplier &amp; inventory performance dashboard</h1>
   <p class="lead">Taking stakeholder questions through to KPI definitions, a data model and a Power BI layout.</p>
+  <p><a class="btn ghost" href="https://chiamakaikpo.github.io/supplier-inventory-dashboard/" target="_blank" rel="noopener">Open the live dashboard</a> <a class="btn ghost" href="https://github.com/chiamakaikpo/supplier-inventory-dashboard" target="_blank" rel="noopener">View the data, SQL and DAX on GitHub</a></p>
+  <div class="facts">
+    <div><b>Context</b><span>Portfolio project, synthetic data</span></div>
+    <div><b>My role</b><span>Requirements, KPI design, data model, dashboard build</span></div>
+    <div><b>Artefacts</b><span>Question log, KPI dictionary, star schema, wireframe, SQL, DAX, working dashboard</span></div>
+    <div><b>Tools</b><span>Power BI, DAX, SQL, Python, Excel</span></div>
+  </div>
+</div></header>
+
+<article><div class="wrap">
+  <h2>The business problem</h2>
+  <p>Procurement and planning teams often work from separate reports. Buyers see supplier data, planners see stock data, and nobody sees how a late supplier turns into a stockout two weeks later. The goal is one view that connects <strong>supplier performance</strong> to <strong>inventory health</strong>.</p>
+
+  <h2>Starting from questions, not charts</h2>
+  <table>
+    <tr><th>Stakeholder</th><th>Question they need answered</th></tr>
+    <tr><td>Head of Procurement</td><td>Which suppliers are consistently late or short-shipping, and how much spend is at risk?</td></tr>
+    <tr><td>Supply planner</td><td>Which SKUs are heading for a stockout, and is a supplier the cause?</td></tr>
+    <tr><td>Finance</td><td>How much working capital is tied up in excess or slow-moving stock?</td></tr>
+  </table>
+
+  <h2>KPI dictionary</h2>
+  <div class="panel">
+  <table>
+    <tr><th>KPI</th><th>Definition</th><th>Target (example)</th></tr>
+    <tr><td>On-time in-full (OTIF)</td><td>Supplier deliveries received on or before the due date with full quantity ÷ total deliveries</td><td>≥ 95%</td></tr>
+    <tr><td>Supplier lead-time variance</td><td>Std. deviation of actual vs. agreed lead time (days)</td><td>≤ 2 days</td></tr>
+    <tr><td>Days of cover</td><td>On-hand stock ÷ average daily forecast demand</td><td>By SKU class</td></tr>
+    <tr><td>Stockout rate</td><td>SKU-days with zero stock ÷ total SKU-days</td><td>≤ 2%</td></tr>
+    <tr><td>Excess stock value</td><td>Value of stock above the maximum days-of-cover band</td><td>Trending down</td></tr>
+  </table>
+  </div>
+
+  <h2>Data model</h2>
+  <p>I used a star schema so the measures stay simple and the report stays fast:</p>
+  <ul>
+    <li><strong>Fact tables:</strong> Purchase order lines (ordered, received, due and receipt dates), daily inventory snapshots</li>
+    <li><strong>Dimensions:</strong> Supplier, Product (SKU, category, ABC class), Location, Date</li>
+  </ul>
+
+  <h2>Dashboard layout</h2>
+  <div class="panel">
+    <h4>Wireframe, overview page</h4>
+    <div class="wire">
+      <div><b>OTIF %</b>KPI card with trend vs. last month</div>
+      <div><b>Stockout rate</b>KPI card</div>
+      <div><b>Days of cover</b>KPI card</div>
+      <div><b>Excess stock £</b>KPI card</div>
+      <div class="w2"><b>Supplier scorecard</b>Table: OTIF, lead-time variance, spend. Conditional formatting flags the worst performers.</div>
+      <div class="w2"><b>At-risk SKUs</b>Projected days of cover vs. supplier lead time; click a SKU to see its supplier</div>
+      <div class="w4"><b>Trend</b>OTIF vs. stockout rate over 12 months, showing the link between supplier delays and availability</div>
+    </div>
+    <p class="muted" style="font-size:14px;margin:12px 0 0">Slicers: date range, category, location, supplier. Drill-through from any supplier to its open POs.</p>
+  </div>
+
+  <h2>What the data showed</h2>
+  <p>I generated a year of synthetic data (8 suppliers, 40 SKUs, 3 distribution centres) and ran every KPI in SQL:</p>
+  <ul>
+    <li>OTIF was <strong>82.9%</strong> against a 95% target; only 2 of 8 suppliers met it.</li>
+    <li>One supplier, at 61.4% OTIF, caused <strong>64% of all lost sales</strong>. Its SKUs were out of stock 5.2% of the time.</li>
+    <li>SKUs from on-target suppliers were out of stock less than 0.1% of the time.</li>
+    <li>Stock for B and C class items was running below the agreed cover bands: a replenishment settings problem, not a supplier one.</li>
+  </ul>
+
+  <h2>What this shows as a BA</h2>
+  <ul>
+    <li>Starting from decisions and questions, not from available data</li>
+    <li>Writing precise KPI definitions so everyone calculates them the same way</li>
+    <li>Designing a data model and layout that answers each stakeholder's question within a click</li>
+  </ul>
+
+  <h2>Reflection</h2>
+  <p>A good KPI dictionary prevents most dashboard arguments. When finance and procurement disagree about "on time", the fix is an agreed definition, not a new chart.</p>
+
+  <div class="pager">
+    <a href="case-procurement.html">← Procure-to-pay</a>
+    <a href="index.html#work">All case studies →</a>
+  </div>
+</div></article>
+
+<footer><div class="wrap"><span>© 2026 Chiamaka Ikpo</span></div></footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplier &amp; Inventory Dashboard | Chiamaka Ikpo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="index.html">Chiamaka Ikpo</a>
+  <ul><li><a href="index.html#work">Case studies</a></li><li><a href="index.html#contact">Contact</a></li></ul>
+</div></nav>
+
+<header class="case-head"><div class="wrap">
+  <p class="eyebrow">Case study 4 · BI &amp; dashboard design</p>
+  <h1>Designing a supplier &amp; inventory performance dashboard</h1>
+  <p class="lead">Taking stakeholder questions through to KPI definitions, a data model and a Power BI layout.</p>
   <div class="facts">
     <div><b>Context</b><span>Portfolio project, synthetic data</span></div>
     <div><b>My role</b><span>Requirements, KPI design, data model, dashboard build</span></div>
